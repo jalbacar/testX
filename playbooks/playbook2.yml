@@ -1,0 +1,16 @@
+---
+
+- name: "Actualizacion general maquina"
+  hosts: ansible_hosts
+  gather_facts: true
+  become: true
+  become_method: "ansible.builtin.sudo"
+
+  tasks:
+    - name: "Actualizacion maquina con las ultimas versiones"
+      ansible.builtin.apt:
+        name: "*"
+        state: "latest"
+        update_cache: true
+
+    

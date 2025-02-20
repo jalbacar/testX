@@ -1,0 +1,38 @@
+---
+
+- name: "INstalar y configurar el servicio de NTP"
+  hosts: ansible_hosts
+  gather_facts: true
+  become: true
+  become_method: "ansible.builtin.sudo"
+
+  vars:
+    ntp_servers:
+      - "0.uk.pool.ntp.org"
+      - "1.uk.pool.ntp.org"
+      - "2.uk.pool.ntp.org"
+  
+  handlers:
+    - name: "Restart ntp service"
+      ansible.builtin.service:
+        name: "ntp"
+        state: "restarted"
+  
+  tasks:
+    - name: "Instalacion de los paquetes ntp"
+      ansible.builtin.apt:
+        state: "present"
+        pkg:
+          - "ntp"
+          - "sntp"
+          - "ntp-doc"  
+    - name: "Configuracion del NTP"
+      ansible.builtin.template:
+        src: "./templates/ntp.conf.j2"
+        dest: "/etc/ntp.conf"
+        mode: "0644"
+      notify: "Restart ntp service"
+    
+    
+
+
