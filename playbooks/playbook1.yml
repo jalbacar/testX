@@ -6,7 +6,13 @@
   become: true
   become_method: "ansible.builtin.sudo"
 
+  vars_files:
+    - variables/secrets.yml
+
   tasks:
+    - name: "Output some information on our host"
+      ansible.builtin.debug:
+        msg: "Me estoy conectando a {{ ansible_nodename }} corriendo la distro {{ ansible_distribution }}"
     - name: "Output some information on our host"
       ansible.builtin.debug:
         msg: "Me estoy conectando a {{ ansible_nodename }} corriendo la distro {{ ansible_distribution }}"
