@@ -6,7 +6,8 @@
   become: true
   become_method: "ansible.builtin.sudo"
 
-  
+  vars_files:
+    - ./variables/secrets.yml
 
   tasks:
     - name: "Output some information on our host"
